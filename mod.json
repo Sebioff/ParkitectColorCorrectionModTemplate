@@ -1,0 +1,7 @@
+{
+    "BaseDir": ".",
+    "EntryPoint": "ColorCorrection.Main",
+    "IsDevelopment": true,
+    "Name": "Color Correction",
+    "Project": "ColorCorrection.csproj"
+}
