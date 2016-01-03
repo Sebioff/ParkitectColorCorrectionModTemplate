@@ -12,7 +12,10 @@ namespace ColorCorrection {
 		}
 		
 		public void onDisabled() {
-			UnityEngine.Object.Destroy(_go);
+			if (_go != null) {
+				UnityEngine.Object.Destroy(_go);
+				_go = null;
+			}
 		}
 		
 		public string Name {
@@ -21,6 +24,10 @@ namespace ColorCorrection {
 		
 		public string Description {
 			get { return "Changes the colors of the game."; }
+		}
+
+		public string Identifier {
+			get { return "com.themeparkitect.ColorCorrection"; }
 		}
 
 		// PN mod location path
