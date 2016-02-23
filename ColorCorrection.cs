@@ -7,28 +7,28 @@ namespace ColorCorrection {
 	public class ColorCorrection : MonoBehaviour {
 		public string modPath;
 
-		private ColorCorrectionLookup colorCorrectionLookup;
-		private Texture3D defaultLut;
+		private Lutify lutify;
+		private Texture2D defaultLut;
 
 		void Awake() {
-			colorCorrectionLookup = Camera.main.GetComponent<ColorCorrectionLookup>();
-			if (colorCorrectionLookup == null) {
+			lutify = Camera.main.GetComponent<Lutify>();
+			if (lutify == null) {
 				Debug.LogError("Can't aply color correction effect. The games camera does not have a color correction component attached.");
 			}
 		}
 
 		void Start() {
-			if (colorCorrectionLookup == null) {
+			if (lutify == null) {
 				return;
 			}
 
 			string lutPath = modPath + "/lut.png";
 			if (File.Exists(lutPath)) {
-				defaultLut = colorCorrectionLookup.converted3DLut;
+				defaultLut = lutify.LookupTexture;
 
 				Texture2D lut = new Texture2D(2, 2);
 				lut.LoadImage(File.ReadAllBytes(lutPath));
-				colorCorrectionLookup.Convert(lut, lutPath);
+				lutify.LookupTexture = lut;
 			}
 			else {
 				Debug.LogError("Can't load LUT texture from: " + lutPath);
@@ -36,11 +36,11 @@ namespace ColorCorrection {
 		}
 
 		void OnDestroy() {
-			if (colorCorrectionLookup == null) {
+			if (lutify == null) {
 				return;
 			}
 
-			colorCorrectionLookup.converted3DLut = defaultLut;
+			lutify.LookupTexture = defaultLut;
 		}
 	}
 }
